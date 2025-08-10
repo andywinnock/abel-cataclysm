@@ -22,6 +22,7 @@ import com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.AcropolisMon
 import com.github.L_Ender.cataclysm.entity.Pet.Modern_Remnant_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Netherite_Ministrosity_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Seedot_Entity;
+import com.github.L_Ender.cataclysm.entity.Pet.Bonsly_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.The_Baby_Leviathan_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Teddy_Bear_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Labubu_Entity;
@@ -237,6 +238,11 @@ public class ModEntities {
             .clientTrackingRange(10)
             .fireImmune()
             .build(Cataclysm.MODID + ":the_baby_leviathan"));
+
+    public static final RegistryObject<EntityType<Bonsly_Entity>> BONSLY = ENTITY_TYPE.register("bonsly", () -> EntityType.Builder.of(Bonsly_Entity::new, MobCategory.CREATURE)
+            .sized(0.6F, 1.4F)
+            .clientTrackingRange(10)
+            .build(Cataclysm.MODID + ":bonsly"));
 
     public static final RegistryObject<EntityType<Teddy_Bear_Entity>> TEDDY_BEAR = ENTITY_TYPE.register("teddy_bear", () -> EntityType.Builder.of(Teddy_Bear_Entity::new, MobCategory.CREATURE)
             .sized(0.6F, 0.8F)
@@ -750,6 +756,7 @@ public class ModEntities {
         event.put(THE_HARBINGER.get(), The_Harbinger_Entity.harbinger().build());
         event.put(THE_LEVIATHAN.get(), The_Leviathan_Entity.leviathan().build());
         event.put(THE_BABY_LEVIATHAN.get(), The_Baby_Leviathan_Entity.babyleviathan().build());
+        event.put(BONSLY.get(), Bonsly_Entity.createAttributes().build());
         event.put(TEDDY_BEAR.get(), Teddy_Bear_Entity.bakeAttributes().build());
         event.put(LABUBU.get(), Labubu_Entity.bakeAttributes().build());
         event.put(DEEPLING.get(), Deepling_Entity.deepling().build());

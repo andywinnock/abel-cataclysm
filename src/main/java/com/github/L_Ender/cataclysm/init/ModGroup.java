@@ -106,6 +106,7 @@ public class ModGroup {
                 entries.accept(ModItems.CURSED_EYE.get());
                 entries.accept(ModItems.STORM_EYE.get());
                 entries.accept(ModItems.THE_BABY_LEVIATHAN_BUCKET.get());
+                entries.accept(ModItems.BONSLY_BUCKET.get());
                 entries.accept(ModItems.MODERN_REMNANT_BUCKET.get());
                 entries.accept(ModItems.NETHERITE_MINISTROSITY_BUCKET.get());
 
@@ -137,6 +138,7 @@ public class ModGroup {
                 entries.accept(ModItems.THE_WATCHER_SPAWN_EGG.get());
                 entries.accept(ModItems.THE_LEVIATHAN_SPAWN_EGG.get());
                 entries.accept(ModItems.THE_BABY_LEVIATHAN_SPAWN_EGG.get());
+                entries.accept(ModItems.BONSLY_SPAWN_EGG.get());
                 entries.accept(ModItems.TEDDY_BEAR_SPAWN_EGG.get());
                 entries.accept(ModItems.LABUBU_SPAWN_EGG.get());
                 entries.accept(ModItems.CORALSSUS_SPAWN_EGG.get());

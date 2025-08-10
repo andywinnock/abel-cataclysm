@@ -773,6 +773,9 @@ public class ModItems {
     public static final RegistryObject<Item> THE_BABY_LEVIATHAN_BUCKET = ITEMS.register("the_baby_leviathan_bucket",
             () -> new ModFishBucket(ModEntities.THE_BABY_LEVIATHAN, Fluids.WATER, new Item.Properties().fireResistant()));
 
+    public static final RegistryObject<Item> BONSLY_BUCKET = ITEMS.register("bonsly_bucket",
+            () -> new ModernRemantBucket(ModEntities.BONSLY, Fluids.EMPTY, new Item.Properties()));
+
     public static final RegistryObject<Item> MODERN_REMNANT_BUCKET = ITEMS.register("modern_remnant_bucket",
             () -> new ModernRemantBucket(ModEntities.MODERN_REMNANT, Fluids.EMPTY, new Item.Properties().fireResistant()));
 
@@ -823,6 +826,9 @@ public class ModItems {
 
     public static final RegistryObject<SpawnEggItem> THE_BABY_LEVIATHAN_SPAWN_EGG = ITEMS.register("the_baby_leviathan_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.THE_BABY_LEVIATHAN, 0x322141, 0x8a3eff, new Item.Properties()));
+
+    public static final RegistryObject<SpawnEggItem> BONSLY_SPAWN_EGG = ITEMS.register("bonsly_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.BONSLY, 0x0da70b, 0x894326, new Item.Properties()));
 
     public static final RegistryObject<SpawnEggItem> TEDDY_BEAR_SPAWN_EGG = ITEMS.register("teddy_bear_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.TEDDY_BEAR, 0x8B4513, 0xFFB6C1, new Item.Properties()));
@@ -934,6 +940,7 @@ public class ModItems {
             }
         };
         DispenserBlock.registerBehavior(THE_BABY_LEVIATHAN_BUCKET.get(), dispenseItemBehavior);
+        DispenserBlock.registerBehavior(BONSLY_BUCKET.get(), dispenseItemBehavior);
         DispenserBlock.registerBehavior(MODERN_REMNANT_BUCKET.get(), dispenseItemBehavior);
     }
 }

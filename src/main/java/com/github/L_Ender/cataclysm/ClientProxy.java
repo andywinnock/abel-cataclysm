@@ -11,6 +11,7 @@ import com.github.L_Ender.cataclysm.client.particle.*;
 import com.github.L_Ender.cataclysm.client.render.CMItemstackRenderer;
 import com.github.L_Ender.cataclysm.client.render.blockentity.*;
 import com.github.L_Ender.cataclysm.client.render.entity.*;
+import com.github.L_Ender.cataclysm.client.render.entity.Pet.Bonsly_Renderer;
 import com.github.L_Ender.cataclysm.client.render.etc.CurioHeadRenderer;
 import com.github.L_Ender.cataclysm.client.render.item.CMItemRenderProperties;
 import com.github.L_Ender.cataclysm.client.render.item.CuriosItemRenderer.Blazing_Grips_Renderer;
@@ -166,6 +167,7 @@ public class ClientProxy extends CommonProxy {
         EntityRenderers.register(ModEntities.VOID_VORTEX.get(), Void_Vortex_Renderer::new);
         EntityRenderers.register(ModEntities.THE_LEVIATHAN.get(), The_Leviathan_Renderer::new);
         EntityRenderers.register(ModEntities.THE_BABY_LEVIATHAN.get(), The_Baby_Leviathan_Renderer::new);
+        EntityRenderers.register(ModEntities.BONSLY.get(), Bonsly_Renderer::new);
         EntityRenderers.register(ModEntities.TEDDY_BEAR.get(), Teddy_Bear_Renderer::new);
         EntityRenderers.register(ModEntities.LABUBU.get(), Labubu_Renderer::new);
         EntityRenderers.register(ModEntities.ABYSS_PORTAL.get(), Abyss_Portal_Renderer::new);
