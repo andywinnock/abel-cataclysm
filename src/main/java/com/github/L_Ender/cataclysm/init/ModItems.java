@@ -788,6 +788,9 @@ public class ModItems {
     public static final RegistryObject<SpawnEggItem> NETHERITE_MINISTROSITY_SPAWN_EGG = ITEMS.register("netherite_ministrosity_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.NETHERITE_MINISTROSITY, 0x6b686b, 0xc25f01, new Item.Properties()));
 
+    public static final RegistryObject<SpawnEggItem> SEEDOT_SPAWN_EGG = ITEMS.register("seedot_spawn_egg",
+            () -> new ForgeSpawnEggItem(ModEntities.SEEDOT, 0x8B4513, 0x228B22, new Item.Properties()));
+
     public static final RegistryObject<SpawnEggItem> NAMELESS_SORCERER_SPAWN_EGG = ITEMS.register("nameless_sorcerer_spawn_egg",
             () -> new ForgeSpawnEggItem(ModEntities.NAMELESS_SORCERER, 9804699, 0xB92424, new Item.Properties()));
 

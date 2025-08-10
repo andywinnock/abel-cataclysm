@@ -128,6 +128,7 @@ public class ModGroup {
                 entries.accept(ModItems.ENDERMAPTERA_SPAWN_EGG.get());
                 entries.accept(ModItems.NETHERITE_MONSTROSITY_SPAWN_EGG.get());
                 entries.accept(ModItems.NETHERITE_MINISTROSITY_SPAWN_EGG.get());
+                entries.accept(ModItems.SEEDOT_SPAWN_EGG.get());
                 entries.accept(ModItems.IGNIS_SPAWN_EGG.get());
                 entries.accept(ModItems.IGNITED_REVENANT_SPAWN_EGG.get());
                 entries.accept(ModItems.IGNITED_BERSERKER_SPAWN_EGG.get());

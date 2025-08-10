@@ -21,6 +21,7 @@ import com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonste
 import com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.AcropolisMonsters.*;
 import com.github.L_Ender.cataclysm.entity.Pet.Modern_Remnant_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Netherite_Ministrosity_Entity;
+import com.github.L_Ender.cataclysm.entity.Pet.Seedot_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.The_Baby_Leviathan_Entity;
 import com.github.L_Ender.cataclysm.entity.Pet.Teddy_Bear_Entity;
 import com.github.L_Ender.cataclysm.entity.effect.*;
@@ -76,6 +77,11 @@ public class ModEntities {
             .clientTrackingRange(10)
             .fireImmune()
             .build(Cataclysm.MODID + ":netherite_ministrosity"));
+
+    public static final RegistryObject<EntityType<Seedot_Entity>> SEEDOT = ENTITY_TYPE.register("seedot", () -> EntityType.Builder.of(Seedot_Entity::new, MobCategory.CREATURE)
+            .sized(0.4F, 0.7F)
+            .clientTrackingRange(10)
+            .build(Cataclysm.MODID + ":seedot"));
 
     public static final RegistryObject<EntityType<Lava_Bomb_Entity>> LAVA_BOMB = ENTITY_TYPE.register("lava_bomb", () -> EntityType.Builder.<Lava_Bomb_Entity>of(Lava_Bomb_Entity::new, MobCategory.MISC)
             .sized(0.5f, 0.5f)
@@ -725,6 +731,7 @@ public class ModEntities {
         SpawnPlacements.register(TEDDY_BEAR.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Teddy_Bear_Entity::canSpawn);
         event.put(ENDER_GOLEM.get(), Ender_Golem_Entity.ender_golem().build());
         event.put(NETHERITE_MINISTROSITY.get(), Netherite_Ministrosity_Entity.ministrosity().build());
+        event.put(SEEDOT.get(), Seedot_Entity.createAttributes().build());
         event.put(NETHERITE_MONSTROSITY.get(), Netherite_Monstrosity_Entity.netherite_monstrosity().build());
         event.put(OLD_NETHERITE_MONSTROSITY.get(), Old_Netherite_Monstrosity_Entity.netherite_monstrosity().build());
         event.put(NAMELESS_SORCERER.get(), Nameless_Sorcerer_Entity.nameless_sorcerer().build());
