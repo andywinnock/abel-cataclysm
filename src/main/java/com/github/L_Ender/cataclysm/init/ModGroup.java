@@ -138,6 +138,7 @@ public class ModGroup {
                 entries.accept(ModItems.THE_LEVIATHAN_SPAWN_EGG.get());
                 entries.accept(ModItems.THE_BABY_LEVIATHAN_SPAWN_EGG.get());
                 entries.accept(ModItems.TEDDY_BEAR_SPAWN_EGG.get());
+                entries.accept(ModItems.LABUBU_SPAWN_EGG.get());
                 entries.accept(ModItems.CORALSSUS_SPAWN_EGG.get());
                 entries.accept(ModItems.CORAL_GOLEM_SPAWN_EGG.get());
                 entries.accept(ModItems.DEEPLING_BRUTE_SPAWN_EGG.get());

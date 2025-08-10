@@ -1,7 +1,4 @@
-package com.github.L_Ender.cataclysm.client.model.entity;// Made with Blockbench 4.11.2
-// Exported for Minecraft version 1.17 or later with Mojang mappings
-// Paste this class into your mod and generate all required imports
-
+package com.github.L_Ender.cataclysm.client.model.entity;
 
 import com.github.L_Ender.cataclysm.client.animation.Netherite_Monstrosity_Animation;
 import com.github.L_Ender.cataclysm.entity.InternalAnimationMonster.IABossMonsters.NewNetherite_Monstrosity.Netherite_Monstrosity_Entity;
