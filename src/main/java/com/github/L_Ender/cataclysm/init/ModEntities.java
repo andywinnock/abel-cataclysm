@@ -79,7 +79,7 @@ public class ModEntities {
             .build(Cataclysm.MODID + ":netherite_ministrosity"));
 
     public static final RegistryObject<EntityType<Seedot_Entity>> SEEDOT = ENTITY_TYPE.register("seedot", () -> EntityType.Builder.of(Seedot_Entity::new, MobCategory.CREATURE)
-            .sized(0.4F, 0.7F)
+            .sized(0.6F, 0.9F)  // Increased hitbox size from 0.4x0.7 to 0.6x0.9
             .clientTrackingRange(10)
             .build(Cataclysm.MODID + ":seedot"));
 

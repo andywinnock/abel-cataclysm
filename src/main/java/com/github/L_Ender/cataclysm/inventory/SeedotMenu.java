@@ -73,5 +73,6 @@ public class SeedotMenu extends AbstractContainerMenu {
     public void removed(Player p_39663_) {
         super.removed(p_39663_);
         this.seedotContainer.stopOpen(p_39663_);
+        if (seedot != null) seedot.setAttackState(5);
     }
 }

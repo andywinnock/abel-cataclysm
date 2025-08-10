@@ -51,7 +51,9 @@ import java.util.Optional;
 public class Seedot_Entity extends InternalAnimationPet implements Bucketable, ContainerListener, HasCustomInventoryScreen {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(Seedot_Entity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> IS_SITTING = SynchedEntityData.defineId(Seedot_Entity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> IS_AWAKEN = SynchedEntityData.defineId(Seedot_Entity.class, EntityDataSerializers.BOOLEAN);
     public SimpleContainer seedotInventory;
+    private int previousCommand = 0; // Store command before inventory opens
     public AnimationState idleAnimationState = new AnimationState();
     public AnimationState walkAnimationState = new AnimationState();
     public AnimationState sitAnimationState = new AnimationState();
@@ -74,15 +76,23 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
         this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D, 60));
-        this.goalSelector.addGoal(1, new InternalPetStateGoal(this, 1, 1, 0, 0, 0) {
+        this.goalSelector.addGoal(1, new InternalPetStateGoal(this,1,1,0,0,0){
+
             @Override
             public boolean canUse() {
-                return super.canUse();
+                return super.canUse() ;
             }
 
             @Override
             public void tick() {
                 entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+            }
+        });
+
+        this.goalSelector.addGoal(0, new InternalPetStateGoal(this,1,2,0,40,0){
+            @Override
+            public boolean canUse() {
+                return super.canUse() && Seedot_Entity.this.getIsAwaken();
             }
         });
     }
@@ -110,12 +120,33 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         return SoundEvents.GRASS_STEP;
     }
 
+    public boolean isSleep() {
+        return this.getAttackState() == 1 || this.getAttackState() == 2;
+    }
+
+    public boolean isOpen() {
+        return this.getAttackState() == 3 || this.getAttackState() == 4;
+    }
+
     public void setIsSitting(boolean isSitting) {
         this.entityData.set(IS_SITTING, isSitting);
     }
 
     public boolean getIsSitting() {
         return this.entityData.get(IS_SITTING);
+    }
+
+    public void setIsAwaken(boolean isAwaken) {
+        this.entityData.set(IS_AWAKEN, isAwaken);
+        if (!isAwaken) {
+            this.setAttackState(1);
+        } else {
+            this.setAttackState(0);  // Reset to 0 when awakened to allow movement
+        }
+    }
+
+    public boolean getIsAwaken() {
+        return this.entityData.get(IS_AWAKEN);
     }
 
     protected int getInventorySize() {
@@ -149,6 +180,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
                     serverplayer.closeContainer();
                 }
 
+                this.setAttackState(3);
                 serverplayer.nextContainerCounter();
                 Cataclysm.NETWORK_WRAPPER.send(PacketDistributor.PLAYER.with(() -> serverplayer), new MessageSeedotInventory(serverplayer.containerCounter, this.seedotInventory.getContainerSize(), this.getId()));
                 serverplayer.containerMenu = new SeedotMenu(serverplayer.containerCounter, serverplayer.getInventory(), this.seedotInventory, this);
@@ -181,7 +213,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, Float.MAX_VALUE)
-                .add(Attributes.MOVEMENT_SPEED, 0.25F)
+                .add(Attributes.MOVEMENT_SPEED, 0.25F * 1.3F)  // Increased by factor of 1.3
                 .add(Attributes.FOLLOW_RANGE, 48.0D);
     }
 
@@ -195,17 +227,11 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
             return flag ? InteractionResult.CONSUME : InteractionResult.PASS;
         } else {
             if (this.isTame()) {
-                if (this.isFood(itemstack) && this.getHealth() < this.getMaxHealth()) {
-                    if (!player.getAbilities().instabuild) {
-                        itemstack.shrink(1);
-                    }
-                    this.heal(1.0F);
-                    this.gameEvent(GameEvent.EAT, this);
-                    return InteractionResult.SUCCESS;
-                }
+                // Remove wheat seed feeding for tamed pets - they only need it for taming
 
                 if (this.isOwnedBy(player) && !this.isFood(itemstack)) {
                     if (!player.isShiftKeyDown()) {
+                        this.previousCommand = this.getCommand(); // Store current command
                         this.openCustomInventoryScreen(player);
                         this.setCommand(2);
                         this.setOrderedToSit(true);
@@ -219,6 +245,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
 
                 if (this.random.nextInt(3) == 0) {
                     this.tame(player);
+                    this.setIsAwaken(true);
                     this.navigation.stop();
                     this.setTarget(null);
                     this.setOrderedToSit(true);
@@ -255,7 +282,8 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
 
     @Override
     public boolean isFood(ItemStack stack) {
-        return stack.is(Items.WHEAT_SEEDS);
+        // Only wheat seeds for untamed pets
+        return stack.is(Items.WHEAT_SEEDS) && !this.isTame();
     }
 
     @Override
@@ -263,6 +291,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         super.defineSynchedData();
         this.entityData.define(FROM_BUCKET, false);
         this.entityData.define(IS_SITTING, false);
+        this.entityData.define(IS_AWAKEN, false);
     }
 
     @Override
@@ -270,6 +299,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         super.addAdditionalSaveData(compound);
         compound.putBoolean("FromBucket", this.fromBucket());
         compound.putBoolean("IsSitting", this.getIsSitting());
+        compound.putBoolean("is_Awaken", this.getIsAwaken());
         
         if (this.seedotInventory != null) {
             ListTag listtag = new ListTag();
@@ -291,6 +321,7 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         super.readAdditionalSaveData(compound);
         this.setFromBucket(compound.getBoolean("FromBucket"));
         this.setIsSitting(compound.getBoolean("IsSitting"));
+        this.setIsAwaken(compound.getBoolean("is_Awaken"));
         
         if (this.seedotInventory != null) {
             ListTag listtag = compound.getList("Items", 10);
@@ -339,6 +370,36 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
         return new SmartBodyHelper2(this);
     }
 
+    public void aiStep() {
+        super.aiStep();
+        if ((this.isSitting() || isOpen()) && this.getNavigation().isDone()) {
+            this.getNavigation().stop();
+        }
+        if (this.level().isClientSide()) {
+            this.idleAnimationState.animateWhen(this.getAttackState() == 0, this.tickCount);
+        }
+        if(this.getAttackState() == 3){
+            if(this.attackTicks == 1){
+                this.playSound(SoundEvents.SHULKER_AMBIENT, 1.0F, 2.0F);
+            }
+            if(this.attackTicks >= 9){
+                this.setAttackState(4);
+            }
+        }
+        if(this.getAttackState() == 5){
+            if(this.attackTicks == 1){
+                this.playSound(SoundEvents.SHULKER_AMBIENT, 1.0F, 2.0F);
+            }
+            if(this.attackTicks >= 10){
+                this.setAttackState(0);
+                // Restore previous command state after inventory closes
+                this.setCommand(this.previousCommand);
+                boolean shouldSit = this.previousCommand == 2;
+                this.setOrderedToSit(shouldSit);
+            }
+        }
+    }
+
     @Override
     public void tick() {
         super.tick();
@@ -363,6 +424,16 @@ public class Seedot_Entity extends InternalAnimationPet implements Bucketable, C
     @Override
     public boolean shouldFollow() {
         return this.getCommand() == 1;
+    }
+
+    public void travel(Vec3 vec3d) {
+        if (this.isSitting()) {
+            if (this.getNavigation().getPath() != null) {
+                this.getNavigation().stop();
+            }
+            vec3d = Vec3.ZERO;
+        }
+        super.travel(vec3d);
     }
 
     public boolean hasInventoryChanged(Container p_149512_) {
