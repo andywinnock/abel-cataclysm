@@ -405,6 +405,11 @@ public class ModEntities {
             .fireImmune()
             .build(Cataclysm.MODID + ":mini_abyss_blast"));
 
+    public static final RegistryObject<EntityType<Bonsly_Abyss_Blast_Entity>> BONSLY_ABYSS_BLAST = ENTITY_TYPE.register("bonsly_abyss_blast", () -> EntityType.Builder.<Bonsly_Abyss_Blast_Entity>of(Bonsly_Abyss_Blast_Entity::new, MobCategory.MISC)
+            .sized(0.1F, 0.1F)
+            .fireImmune()
+            .build(Cataclysm.MODID + ":bonsly_abyss_blast"));
+
     public static final RegistryObject<EntityType<Portal_Abyss_Blast_Entity>> PORTAL_ABYSS_BLAST = ENTITY_TYPE.register("portal_abyss_blast", () -> EntityType.Builder.<Portal_Abyss_Blast_Entity>of(Portal_Abyss_Blast_Entity::new, MobCategory.MISC)
             .sized(0.1F, 0.1F)
             .fireImmune()

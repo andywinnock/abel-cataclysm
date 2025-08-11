@@ -14,6 +14,7 @@ import com.github.L_Ender.cataclysm.entity.etc.ISemiAquatic;
 import com.github.L_Ender.cataclysm.entity.etc.path.SemiAquaticPathNavigator;
 import com.github.L_Ender.cataclysm.entity.etc.SmartBodyHelper2;
 import com.github.L_Ender.cataclysm.entity.projectile.Mini_Abyss_Blast_Entity;
+import com.github.L_Ender.cataclysm.entity.projectile.Bonsly_Abyss_Blast_Entity;
 import com.github.L_Ender.cataclysm.init.ModEntities;
 import com.github.L_Ender.cataclysm.init.ModItems;
 import com.github.L_Ender.cataclysm.init.ModSounds;
@@ -111,7 +112,7 @@ public class Bonsly_Entity extends LLibraryAnimationPet implements ISemiAquatic,
 
     public boolean hurt(DamageSource source, float amount) {
         Entity entity = source.getDirectEntity();
-        if (entity instanceof Mini_Abyss_Blast_Entity || entity instanceof Abyss_Blast_Entity || entity instanceof Portal_Abyss_Blast_Entity) {
+        if (entity instanceof Mini_Abyss_Blast_Entity || entity instanceof Bonsly_Abyss_Blast_Entity || entity instanceof Abyss_Blast_Entity || entity instanceof Portal_Abyss_Blast_Entity) {
             return false;
         }
         return super.hurt(source, amount);
@@ -138,7 +139,7 @@ public class Bonsly_Entity extends LLibraryAnimationPet implements ISemiAquatic,
         this.goalSelector.addGoal(0, new BonslyBlastAttackGoal(this, BONSLY_ABYSS_BLAST));
         this.goalSelector.addGoal(4, new MobAIFindWater(this, 1.0f));
         this.goalSelector.addGoal(4, new MobAILeaveWater(this));
-        this.goalSelector.addGoal(6, new TemptGoal(this, 1.0D, Ingredient.of(ItemTags.LEAVES), false));
+        this.goalSelector.addGoal(6, new TemptGoal(this, 1.0D, Ingredient.of(Items.WHEAT_SEEDS), false));
         this.goalSelector.addGoal(7, new SemiAquaticAIRandomSwimming(this, 1.0D, 30));
         this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 6.0F));
@@ -253,7 +254,7 @@ public class Bonsly_Entity extends LLibraryAnimationPet implements ISemiAquatic,
         Item item = itemstack.getItem();
         InteractionResult type = super.mobInteract(player, hand);
         
-        if (!isTame() && itemstack.is(ItemTags.LEAVES)) {
+        if (!isTame() && itemstack.is(Items.WHEAT_SEEDS)) {
             this.usePlayerItem(player, hand, itemstack);
             this.gameEvent(GameEvent.EAT);
             foodFeedings++;
@@ -266,7 +267,7 @@ public class Bonsly_Entity extends LLibraryAnimationPet implements ISemiAquatic,
             return InteractionResult.SUCCESS;
         }
         
-        if (isTame() && itemstack.is(ItemTags.LEAVES)) {
+        if (isTame() && itemstack.is(Items.WHEAT_SEEDS)) {
             if (this.getHealth() < this.getMaxHealth()) {
                 this.usePlayerItem(player, hand, itemstack);
                 this.gameEvent(GameEvent.EAT);
@@ -524,7 +525,7 @@ public class Bonsly_Entity extends LLibraryAnimationPet implements ISemiAquatic,
             float dir = 90.0f;
             if (this.entity.getAnimationTick() == 37) {
                 if (!entity.level().isClientSide) {
-                    Mini_Abyss_Blast_Entity DeathBeam = new Mini_Abyss_Blast_Entity(ModEntities.MINI_ABYSS_BLAST.get(), entity.level(), entity, entity.getX(), entity.getY(), entity.getZ(), (float) ((entity.yHeadRot + dir) * Math.PI / 180), (float) (-entity.getXRot() * Math.PI / 180), 80, dir);
+                    Bonsly_Abyss_Blast_Entity DeathBeam = new Bonsly_Abyss_Blast_Entity(ModEntities.BONSLY_ABYSS_BLAST.get(), entity.level(), entity, entity.getX(), entity.getY(), entity.getZ(), (float) ((entity.yHeadRot + dir) * Math.PI / 180), (float) (-entity.getXRot() * Math.PI / 180), 80, dir);
                     entity.level().addFreshEntity(DeathBeam);
                 }
             }
