@@ -1,0 +1,30 @@
+---
+alwaysApply: true
+---
+## Project Structure (Forge 1.20.1, Java 17)
+
+- **Build & Config**
+  - Gradle build: [build.gradle](mdc:build.gradle), [settings.gradle](mdc:settings.gradle), [gradle.properties](mdc:gradle.properties)
+  - Mod metadata: [mods.toml](mdc:src/main/resources/META-INF/mods.toml)
+  - Java version: 17; Mappings: official 1.20.1; Forge: 47.x
+  - Mixins & refmap: [cataclysm.mixins.json](mdc:src/main/resources/cataclysm.mixins.json)
+  - Access transformer: [accesstransformer.cfg](mdc:src/main/resources/META-INF/accesstransformer.cfg)
+
+- **Java Sources**
+  - Root package: `com.github.L_Ender.cataclysm`
+  - Registries: [ModItems.java](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModItems.java), [ModEntities.java](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModEntities.java)
+  - Client bootstrap & renderers: [ClientProxy.java](mdc:src/main/java/com/github/L_Ender/cataclysm/ClientProxy.java)
+
+- **Resources**
+  - Assets: `src/main/resources/assets/cataclysm/` (models, textures, sounds, lang)
+    - Example lang: [en_us.json](mdc:src/main/resources/assets/cataclysm/lang/en_us.json)
+  - Data pack: `src/main/resources/data/` (loot tables, recipes, tags, worldgen, advancements)
+  - Pack metadata: [pack.mcmeta](mdc:src/main/resources/pack.mcmeta)
+
+- **Run Dir (Dev)**
+  - Uses `run/` for configs, logs, and local saves during dev runs.
+
+Conventions
+- Use `DeferredRegister` for registries and keep registry ids lowercase with underscores (e.g., `teddy_bear`).
+- When adding content, update both registry code and corresponding assets/data entries, plus language keys under `assets/cataclysm/lang/`.
+

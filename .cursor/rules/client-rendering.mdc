@@ -1,0 +1,13 @@
+---
+globs: src/main/java/**/client/**/*.java
+description: Client rendering hooks, model layers, and renderer registration
+---
+## Client Rendering
+
+- Register entity renderers in `clientInit()` within [ClientProxy.java](mdc:src/main/java/com/github/L_Ender/cataclysm/ClientProxy.java) using `EntityRenderers.register(ModEntities.X.get(), X_Renderer::new)`.
+- Provide a model with `ModelLayerLocation` and `createBodyLayer()`. Example: [Teddy_Bear_Model.java](mdc:src/main/java/com/github/L_Ender/cataclysm/client/model/entity/Teddy_Bear_Model.java)
+- A simple renderer extends `MobRenderer` and returns a texture `ResourceLocation`. Example: [Teddy_Bear_Renderer.java](mdc:src/main/java/com/github/L_Ender/cataclysm/client/render/entity/Teddy_Bear_Renderer.java)
+- If adding new block entity renderers or item properties, register them in the same client init lifecycle in `ClientProxy`.
+
+Textures should live under `assets/cataclysm/textures/...` and be referenced by `new ResourceLocation(modid, path)`.
+

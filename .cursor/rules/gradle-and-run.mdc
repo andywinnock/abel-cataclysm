@@ -1,0 +1,17 @@
+---
+description: Build/run settings and versions for this mod
+globs: build.gradle,settings.gradle,gradle.properties
+---
+## Build & Run
+
+- Java 17 toolchain; Forge 47.x; MC 1.20.1; mappings `official:1.20.1`
+- Memory: `org.gradle.jvmargs=-Xmx10G` in [gradle.properties](mdc:gradle.properties)
+- Mixins enabled via Sponge plugin and configured in [build.gradle](mdc:build.gradle); configs: [cataclysm.mixins.json](mdc:src/main/resources/cataclysm.mixins.json)
+- Access transformer configured at [META-INF/accesstransformer.cfg](mdc:src/main/resources/META-INF/accesstransformer.cfg)
+
+Common Gradle tasks (dev)
+- Generate IDE runs: `genIntellijRuns` (or `genEclipseRuns`)
+- Client/server/data runs are preconfigured in [build.gradle](mdc:build.gradle) with working dir `run/`
+
+Publishing is configured to a local `mcmodsrepo`; jars are reobfuscated via `reobfJar`.
+

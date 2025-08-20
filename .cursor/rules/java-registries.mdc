@@ -1,0 +1,34 @@
+---
+globs: **/*.java
+description: Guidelines for adding/updating Forge registries (entities/items) and attributes
+---
+## Java Registries & Attributes
+
+- **Items**
+  - Register via `DeferredRegister<Item>` in [ModItems.java](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModItems.java)
+  - Spawn eggs use `ForgeSpawnEggItem` with registry colors. Add corresponding lang keys: `item.cataclysm.<id>`.
+
+- **Entities**
+  - Register via `DeferredRegister<EntityType<?>>` in [ModEntities.java](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModEntities.java)
+  - Use `EntityType.Builder.of(Factory, MobCategory).sized(...).clientTrackingRange(...).build(modid + ":id")`
+  - Add attributes in `initializeAttributes(EntityAttributeCreationEvent)` and, if applicable, spawn rules via `SpawnPlacements.register(...)` in the same file.
+  - Example references:
+    - Teddy Bear type: [ModEntities.java](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModEntities.java)
+    - Teddy Bear attributes: [Teddy_Bear_Entity.java](mdc:src/main/java/com/github/L_Ender/cataclysm/entity/Pet/Teddy_Bear_Entity.java)
+
+- **Client Registration**
+  - Register entity renderers in `ClientProxy.clientInit()`: [ClientProxy.java](mdc:src/main/java/com/github/L_Ender/cataclysm/ClientProxy.java)
+  - Models/layers for custom models should expose a `ModelLayerLocation` and `createBodyLayer()`.
+
+- **Naming & Keys**
+  - Registry ids: lowercase snake_case (e.g., `teddy_bear`, `teddy_bear_spawn_egg`).
+  - Language keys: `entity.cataclysm.<id>`, `item.cataclysm.<id>`, `block.cataclysm.<id>` in [en_us.json](mdc:src/main/resources/assets/cataclysm/lang/en_us.json)
+
+- **When adding a new entity**
+  1. Add `EntityType` in `ModEntities`
+  2. Add attributes and (optional) spawn placement
+  3. Add renderer in `ClientProxy`
+  4. Add spawn egg in `ModItems` (optional)
+  5. Add textures/models/animations as needed under assets
+  6. Add lang keys
+

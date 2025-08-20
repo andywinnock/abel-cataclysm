@@ -1,0 +1,38 @@
+---
+globs: src/main/resources/**
+description: Assets (models, textures, lang, sounds) and data (loot, recipes, tags, worldgen) layout and conventions
+---
+## Assets & Data Layout
+
+- Base folders
+  - Assets: `src/main/resources/assets/cataclysm/`
+  - Data: `src/main/resources/data/`
+
+- Language
+  - Add display names and descriptions in [en_us.json](mdc:src/main/resources/assets/cataclysm/lang/en_us.json)
+  - Keys follow: `item.cataclysm.<id>`, `block.cataclysm.<id>`, `entity.cataclysm.<id>`
+
+- Models & Textures
+  - Items: `assets/cataclysm/models/item/<id>.json`, textures under `assets/cataclysm/textures/item/`
+  - Blocks: `assets/cataclysm/blockstates/`, `assets/cataclysm/models/block/`, textures under `assets/cataclysm/textures/block/`
+  - Entities: textures under `assets/cataclysm/textures/entity/` (e.g., `teddy_bear.png`)
+
+- Sounds
+  - Define in `assets/cataclysm/sounds.json` and place audio under `assets/cataclysm/sounds/...`
+
+- Data pack (gameplay)
+  - Loot tables: `data/cataclysm/loot_tables/`
+  - Recipes: `data/cataclysm/recipes/`
+  - Tags: `data/*/tags/`
+  - Worldgen, advancements, damage types, etc., under `data/cataclysm/...`
+
+- Metadata
+  - Pack: [pack.mcmeta](mdc:src/main/resources/pack.mcmeta)
+  - Mod: [mods.toml](mdc:src/main/resources/META-INF/mods.toml)
+
+Checklist when adding new content
+- Registry entry in Java (item, block, entity)
+- Model(s) and texture(s)
+- Language keys
+- Optional: sound(s), loot, recipe, tags, worldgen, advancements
+

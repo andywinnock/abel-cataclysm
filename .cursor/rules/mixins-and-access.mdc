@@ -1,0 +1,16 @@
+---
+description: How to add mixins and access transformers safely
+globs: src/main/resources/cataclysm.mixins.json,src/main/resources/META-INF/accesstransformer.cfg
+---
+## Mixins & Access
+
+- Mixins
+  - Config file: [cataclysm.mixins.json](mdc:src/main/resources/cataclysm.mixins.json)
+  - Package: `com.github.L_Ender.cataclysm.mixin`
+  - Ensure mixin names are added to the appropriate array (`mixins` or `client`), keep compatibility level `JAVA_17`, and refmap `cataclysm.refmap.json`.
+  - The Gradle mixin block already registers configs and refmaps: see [build.gradle](mdc:build.gradle)
+
+- Access transformers
+  - File: [accesstransformer.cfg](mdc:src/main/resources/META-INF/accesstransformer.cfg)
+  - Add only what is necessary; prefer ATs over coremods; keep entries stable across MC/Forge versions.
+

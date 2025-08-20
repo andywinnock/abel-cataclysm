@@ -1,0 +1,22 @@
+---
+alwaysApply: false
+description: Teddy Bear pet — entity, model, renderer, spawn egg, and localization pointers
+---
+## Teddy Bear Pet Guide
+
+References
+- Entity: [Teddy_Bear_Entity.java](mdc:src/main/java/com/github/L_Ender/cataclysm/entity/Pet/Teddy_Bear_Entity.java)
+- Registry: [ModEntities.TEDDY_BEAR](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModEntities.java)
+- Renderer: [Teddy_Bear_Renderer.java](mdc:src/main/java/com/github/L_Ender/cataclysm/client/render/entity/Teddy_Bear_Renderer.java)
+- Model: [Teddy_Bear_Model.java](mdc:src/main/java/com/github/L_Ender/cataclysm/client/model/entity/Teddy_Bear_Model.java)
+- Client registration: [ClientProxy.clientInit](mdc:src/main/java/com/github/L_Ender/cataclysm/ClientProxy.java)
+- Spawn egg: [ModItems.TEDDY_BEAR_SPAWN_EGG](mdc:src/main/java/com/github/L_Ender/cataclysm/init/ModItems.java)
+- Localization: `entity.cataclysm.teddy_bear`, `item.cataclysm.teddy_bear_spawn_egg` in [en_us.json](mdc:src/main/resources/assets/cataclysm/lang/en_us.json)
+
+Implementation notes
+- Attributes: use `bakeAttributes()` on the entity class and register in `initializeAttributes`.
+- Spawning: `SpawnPlacements.register(TEDDY_BEAR, ...)` and a static `canSpawn` helper on the entity.
+- Sitting/taming: prefer parent `TamableAnimal`/custom base implementations; avoid duplicate `SITTING` data accessors.
+- Teleport-to-owner and sit movement lock should mirror vanilla wolf behavior.
+- Ensure textures exist at `assets/cataclysm/textures/entity/teddy_bear.png`.
+
